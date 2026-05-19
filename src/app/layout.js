@@ -23,6 +23,9 @@ const mono = JetBrains_Mono({
 export const metadata = {
   title: 'WargaKlik - Sistem Iuran RT Digital',
   description: 'Sistem manajemen iuran RT modern yang transparan dan digital.',
+  icons: {
+    icon: '/Logo Bar.png',
+  },
 };
 
 export default function RootLayout({ children }) {
