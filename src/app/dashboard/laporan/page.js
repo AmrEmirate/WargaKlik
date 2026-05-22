@@ -85,14 +85,38 @@ export default function WargaLaporan() {
 
               <div className="relative z-10 pt-4 mt-auto">
                 {item.file_url ? (
-                  <a 
-                    href={`${process.env.NEXT_PUBLIC_BACKEND_URL}${item.file_url}`} 
-                    target="_blank" 
-                    rel="noreferrer"
+                  <button 
+                    onClick={async () => {
+                      try {
+                        toast.loading('Mengunduh laporan...', { id: 'download' });
+                        // Fix old db entries that have /uploads instead of /api/uploads
+                        let url = item.file_url;
+                        if (url.startsWith('/uploads/')) {
+                          url = '/api' + url;
+                        }
+                        
+                        const res = await api.get(url, { responseType: 'blob' });
+                        
+                        // Create object url and download
+                        const blob = new Blob([res.data], { type: 'application/pdf' });
+                        const downloadUrl = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = downloadUrl;
+                        link.download = item.file_url.split('/').pop();
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        window.URL.revokeObjectURL(downloadUrl);
+                        
+                        toast.success('Laporan berhasil diunduh', { id: 'download' });
+                      } catch (error) {
+                        toast.error('Gagal mengunduh laporan', { id: 'download' });
+                      }
+                    }}
                     className="w-full bg-slate-900 text-white py-4 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-slate-800 transition-all shadow-lg"
                   >
                     <Download className="w-5 h-5 text-primary" /> Unduh Laporan (PDF)
-                  </a>
+                  </button>
                 ) : (
                   <div className="w-full bg-slate-100 text-slate-400 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 cursor-not-allowed">
                     Berkas Sedang Diproses
