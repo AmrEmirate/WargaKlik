@@ -258,9 +258,8 @@ export default function AdminWarga() {
                              </button>
                             <button 
                               onClick={() => confirmDelete(item.id)}
-                              disabled={item.unpaid_count > 0}
-                              className={`w-9 h-9 flex items-center justify-center bg-slate-50 rounded-xl transition-all shadow-sm ${item.unpaid_count > 0 ? 'opacity-30 cursor-not-allowed text-slate-300' : 'text-slate-400 hover:bg-danger hover:text-white'}`}
-                              title={item.unpaid_count > 0 ? `Tidak bisa hapus: Ada ${item.unpaid_count} tunggakan` : 'Hapus Warga'}>
+                              className="w-9 h-9 flex items-center justify-center bg-slate-50 rounded-xl transition-all shadow-sm text-slate-400 hover:bg-danger hover:text-white"
+                              title="Hapus Warga">
                               <UserX className="w-4 h-4" />
                             </button>
                           </>
@@ -363,9 +362,8 @@ export default function AdminWarga() {
                                    </button>
                                   <button 
                                     onClick={() => confirmDelete(item.id)}
-                                    disabled={item.unpaid_count > 0}
-                                    className={`w-12 h-12 flex items-center justify-center bg-slate-100 rounded-2xl transition-all shadow-sm ${item.unpaid_count > 0 ? 'opacity-30 cursor-not-allowed text-slate-300' : 'text-slate-500 hover:bg-danger hover:text-white'}`}
-                                    title={item.unpaid_count > 0 ? `Tidak bisa hapus: Ada ${item.unpaid_count} tunggakan` : 'Hapus Warga'}>
+                                    className="w-12 h-12 flex items-center justify-center bg-slate-100 rounded-2xl transition-all shadow-sm text-slate-500 hover:bg-danger hover:text-white"
+                                    title="Hapus Warga">
                                     <UserX className="w-5 h-5" />
                                   </button>
                                 </>
