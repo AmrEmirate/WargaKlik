@@ -44,10 +44,9 @@ export default function ProfilPage() {
 
       if (user?.role === 'warga') {
         try {
-          const wargaRes = await api.get('/warga');
-          if (wargaRes.data.success && wargaRes.data.data.length > 0) {
-            const myWarga = wargaRes.data.data.find(w => w.user_id === user.id);
-            if (myWarga) setWargaData(myWarga);
+          const wargaRes = await api.get('/warga/me');
+          if (wargaRes.data.success && wargaRes.data.data) {
+            setWargaData(wargaRes.data.data);
           }
         } catch (e) {}
       }

@@ -89,13 +89,23 @@ export default function TagihanList() {
 
       if (res.data.success && res.data.data.token) {
         window.snap.pay(res.data.data.token, {
-          onSuccess: (result) => {
-            toast.success('Pembayaran berhasil!');
+          onSuccess: async (result) => {
+            toast('Memverifikasi pembayaran...', { icon: '⏳' });
+            try {
+              // result.order_id contains the RAPEL order ID
+              await api.post('/pembayaran/midtrans/sync', { order_id: result.order_id });
+              toast.success('Pembayaran berhasil diverifikasi!');
+            } catch(e) {
+              console.error(e);
+            }
             fetchTagihan();
             setSelectedIds([]);
           },
           onPending: (result) => {
             toast('Menunggu pembayaran...', { icon: '⏳' });
+            try {
+              api.post('/pembayaran/midtrans/sync', { order_id: result.order_id });
+            } catch(e) {}
             fetchTagihan();
             setSelectedIds([]);
           },
