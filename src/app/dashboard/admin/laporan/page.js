@@ -150,14 +150,35 @@ export default function AdminLaporan() {
 
                   <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                     {item.file_url ? (
-                      <a 
-                        href={`${process.env.NEXT_PUBLIC_BACKEND_URL}${item.file_url}`} 
-                        target="_blank" 
-                        rel="noreferrer"
+                      <button 
+                        onClick={async () => {
+                          try {
+                            toast.loading('Mengunduh laporan...', { id: 'downloadAdmin' });
+                            let url = item.file_url;
+                            if (url.startsWith('/api/')) {
+                              url = url.substring(4); // removes '/api'
+                            }
+                            
+                            const res = await api.get(url, { responseType: 'blob' });
+                            const blob = new Blob([res.data], { type: 'application/pdf' });
+                            const downloadUrl = window.URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = downloadUrl;
+                            link.download = item.file_url.split('/').pop();
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            window.URL.revokeObjectURL(downloadUrl);
+                            
+                            toast.success('Laporan berhasil diunduh', { id: 'downloadAdmin' });
+                          } catch (error) {
+                            toast.error('Gagal mengunduh laporan', { id: 'downloadAdmin' });
+                          }
+                        }}
                         className="flex-1 bg-white border border-slate-100 py-3 md:py-4 rounded-xl md:rounded-2xl flex items-center justify-center gap-2 md:gap-3 text-slate-700 font-bold hover:bg-slate-50 hover:border-primary/20 hover:text-primary transition-all text-xs md:text-sm"
                       >
                         <Download className="w-4 h-4 md:w-5 md:h-5" /> Unduh Laporan (PDF)
-                      </a>
+                      </button>
                     ) : (
                       <button disabled className="flex-1 bg-slate-50 text-slate-300 py-3 md:py-4 rounded-xl md:rounded-2xl font-bold cursor-not-allowed text-xs md:text-sm flex items-center justify-center gap-2">
                          <Loader2 className="w-4 h-4 animate-spin" /> Sedang Diproses...

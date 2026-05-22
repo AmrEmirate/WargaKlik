@@ -89,10 +89,11 @@ export default function WargaLaporan() {
                     onClick={async () => {
                       try {
                         toast.loading('Mengunduh laporan...', { id: 'download' });
-                        // Fix old db entries that have /uploads instead of /api/uploads
+                        // Axios base URL is already /api
+                        // So if the URL is /api/uploads/..., we need to change it to /uploads/...
                         let url = item.file_url;
-                        if (url.startsWith('/uploads/')) {
-                          url = '/api' + url;
+                        if (url.startsWith('/api/')) {
+                          url = url.substring(4); // removes '/api'
                         }
                         
                         const res = await api.get(url, { responseType: 'blob' });
