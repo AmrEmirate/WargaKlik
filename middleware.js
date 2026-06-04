@@ -31,6 +31,25 @@ export function middleware(request) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
+  // Role-Based Access Control (RBAC) for Admin pages
+  if (pathname.startsWith('/dashboard/admin') && token) {
+    try {
+      // Decode JWT payload (part 2 of header.payload.signature)
+      const payloadBase64 = token.split('.')[1];
+      // base64url to base64
+      const base64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+      const payloadString = Buffer.from(base64, 'base64').toString('utf8');
+      const payload = JSON.parse(payloadString);
+
+      if (payload.role === 'warga') {
+        // Warga cannot access admin pages
+        return NextResponse.redirect(new URL('/dashboard', request.url));
+      }
+    } catch (err) {
+      console.error('Failed to parse token in middleware:', err);
+    }
+  }
+
   return NextResponse.next();
 }
 
