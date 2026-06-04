@@ -261,7 +261,20 @@ export default function DetailTagihanWarga({ params }) {
                 <tr className="bg-slate-50/50">
                   <th className="p-8 w-20">
                     <div className="flex items-center justify-center">
-                      <div className="w-6 h-6 bg-white border-2 border-slate-200 rounded-lg"></div>
+                      <button
+                        type="button"
+                        onClick={handleSelectAll}
+                        disabled={unpaidItems.length === 0}
+                        className={`w-7 h-7 rounded-xl transition-all flex items-center justify-center border-2 cursor-pointer ${
+                          unpaidItems.length > 0 && selectedIds.length === unpaidItems.length
+                            ? 'bg-primary border-primary shadow-lg shadow-primary/20'
+                            : 'bg-white border-slate-200 hover:border-primary/50'
+                        } ${unpaidItems.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      >
+                        {unpaidItems.length > 0 && selectedIds.length === unpaidItems.length && (
+                          <CheckCircle2 className="w-5 h-5 text-white" />
+                        )}
+                      </button>
                     </div>
                   </th>
                   <th className="p-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Periode</th>
