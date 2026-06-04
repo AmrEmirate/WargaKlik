@@ -85,6 +85,14 @@ export default function WargaIuranPage() {
   };
 
   const handleSave = async () => {
+    // Validate custom nominals
+    for (const item of editItems) {
+      if (item.nominal_custom !== null && item.nominal_custom !== undefined && parseFloat(item.nominal_custom) <= 0) {
+        toast.error(`Nominal khusus untuk iuran "${item.nama}" harus lebih besar dari 0`);
+        return;
+      }
+    }
+
     setSaving(true);
     try {
       const items = editItems.map(i => ({
@@ -202,6 +210,7 @@ export default function WargaIuranPage() {
                     <div className="relative">
                       <input
                         type="number"
+                        min="1"
                         className={`w-full bg-slate-50 border border-slate-200 py-2 px-3 text-slate-900 font-bold text-sm rounded-lg outline-none focus:border-primary transition-all ${item.is_excluded ? 'opacity-40 cursor-not-allowed bg-slate-100' : ''}`}
                         placeholder="Standar"
                         value={item.nominal_custom ?? ''}

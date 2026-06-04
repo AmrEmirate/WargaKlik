@@ -47,6 +47,10 @@ export default function AdminIuran() {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    if (parseFloat(formData.nominal) <= 0) {
+      toast.error('Nominal iuran harus lebih besar dari 0');
+      return;
+    }
     setIsSubmitting(true);
     try {
       if (editingId) {
@@ -270,6 +274,7 @@ export default function AdminIuran() {
                 <input 
                   type="number" 
                   required 
+                  min="1"
                   className="w-full bg-slate-50 border border-slate-200 p-3 text-slate-900 font-black text-xl outline-none focus:border-primary rounded-xl"
                   placeholder="0" 
                   value={formData.nominal} 
