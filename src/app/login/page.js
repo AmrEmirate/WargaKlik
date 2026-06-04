@@ -16,14 +16,15 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!identifier || !password) {
+    const trimmedIdentifier = identifier.trim();
+    if (!trimmedIdentifier || !password) {
       toast.error('Email/Nomor Telepon dan password wajib diisi');
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await login(identifier, password);
+      await login(trimmedIdentifier, password);
       toast.success('Selamat Datang! Login berhasil');
       router.push('/dashboard');
     } catch (err) {
