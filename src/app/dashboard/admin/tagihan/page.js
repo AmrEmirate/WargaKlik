@@ -128,13 +128,13 @@ export default function AdminTagihan() {
 
         {/* Tabs Section */}
         <div className="flex p-1.5 bg-slate-100 rounded-2xl w-fit">
-          <button 
+          <button
             onClick={() => setActiveTab('aktif')}
             className={`px-8 py-3 rounded-xl font-black text-sm transition-all ${activeTab === 'aktif' ? 'bg-white text-primary shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
           >
             Warga Aktif ({aktifCount})
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('nonaktif')}
             className={`px-8 py-3 rounded-xl font-black text-sm transition-all ${activeTab === 'nonaktif' ? 'bg-white text-danger shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
           >
@@ -246,7 +246,7 @@ export default function AdminTagihan() {
                     </div>
 
                     <div className="space-y-6 md:space-y-8 flex-grow mb-8 relative z-10">
-                      <div className="flex justify-between items-end">
+                      <div className="flex justify-between items-end flex-col">
                         <span className="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Total Tunggakan</span>
                         <span className={`text-2xl md:text-4xl font-black tracking-tighter ${totalUnpaid > 0 ? 'text-slate-900' : 'text-primary'}`}>
                           {formatRupiah(totalUnpaid)}
