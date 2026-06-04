@@ -46,6 +46,18 @@ export default function AdminKas() {
 
   const handleCreateKas = async (e) => {
     e.preventDefault();
+    const parsedNominal = parseFloat(formData.nominal);
+    
+    if (parsedNominal <= 0) {
+      toast.error('Nominal harus lebih besar dari 0');
+      return;
+    }
+    
+    if (formData.jenis === 'keluar' && parsedNominal > summary.saldo) {
+      toast.error('Nominal pengeluaran melebihi saldo kas saat ini');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       await api.post('/kas', formData);
@@ -56,7 +68,7 @@ export default function AdminKas() {
         jenis: 'keluar', kategori: 'operasional', nominal: '', tanggal: new Date().toISOString().split('T')[0], keterangan: ''
       });
     } catch (err) {
-      toast.error('Gagal mencatat kas');
+      toast.error(err.response?.data?.message || 'Gagal mencatat kas');
     } finally {
       setIsSubmitting(false);
     }
@@ -299,6 +311,7 @@ export default function AdminKas() {
                 <input 
                   type="number" 
                   required 
+                  min="1"
                   className="w-full bg-slate-50 border border-slate-200 p-3 text-slate-900 font-black text-lg outline-none focus:border-primary rounded-xl"
                   placeholder="0"
                   value={formData.nominal} 
