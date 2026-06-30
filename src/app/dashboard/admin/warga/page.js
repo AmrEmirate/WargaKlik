@@ -239,16 +239,20 @@ export default function AdminWarga() {
                       </div>
                       
                       <div className="flex items-center gap-2">
-                          <Link href={`/dashboard/admin/tagihan/${item.id}`}
-                            className="w-9 h-9 flex items-center justify-center bg-emerald-50 text-primary rounded-xl hover:bg-primary hover:text-white transition-all shadow-sm"
-                            title="Detail Tagihan">
-                            <Receipt className="w-4 h-4" />
-                          </Link>
-                          <Link href={`/dashboard/admin/warga/${item.id}`}
-                            className="w-9 h-9 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-200 transition-all shadow-sm"
-                            title="Pengaturan Iuran">
-                            <Settings className="w-4 h-4" />
-                          </Link>
+                        {hasRole(['rt', 'bendahara', 'wakil_rt']) && (
+                          <>
+                            <Link href={`/dashboard/admin/tagihan/${item.id}`}
+                              className="w-9 h-9 flex items-center justify-center bg-emerald-50 text-primary rounded-xl hover:bg-primary hover:text-white transition-all shadow-sm"
+                              title="Detail Tagihan">
+                              <Receipt className="w-4 h-4" />
+                            </Link>
+                            <Link href={`/dashboard/admin/warga/${item.id}`}
+                              className="w-9 h-9 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-200 transition-all shadow-sm"
+                              title="Pengaturan Iuran">
+                              <Settings className="w-4 h-4" />
+                            </Link>
+                          </>
+                        )}
                         {hasRole(['rt', 'wakil_rt', 'sekretaris']) && (
                           <>
                              <button 
@@ -343,16 +347,20 @@ export default function AdminWarga() {
                           </td>
                           <td className="p-8">
                             <div className="flex items-center justify-end gap-3">
-                              <Link href={`/dashboard/admin/tagihan/${item.id}`}
-                                className="w-12 h-12 flex items-center justify-center bg-emerald-50 text-primary rounded-2xl hover:bg-primary hover:text-white transition-all shadow-sm"
-                                title="Detail Tagihan">
-                                <Receipt className="w-5 h-5" />
-                              </Link>
-                              <Link href={`/dashboard/admin/warga/${item.id}`}
-                                className="w-12 h-12 flex items-center justify-center bg-slate-50 text-slate-400 rounded-2xl hover:bg-slate-200 transition-all shadow-sm"
-                                title="Pengaturan Iuran">
-                                <Settings className="w-5 h-5" />
-                              </Link>
+                              {hasRole(['rt', 'bendahara', 'wakil_rt']) && (
+                                <>
+                                  <Link href={`/dashboard/admin/tagihan/${item.id}`}
+                                    className="w-12 h-12 flex items-center justify-center bg-emerald-50 text-primary rounded-2xl hover:bg-primary hover:text-white transition-all shadow-sm"
+                                    title="Detail Tagihan">
+                                    <Receipt className="w-5 h-5" />
+                                  </Link>
+                                  <Link href={`/dashboard/admin/warga/${item.id}`}
+                                    className="w-12 h-12 flex items-center justify-center bg-slate-50 text-slate-400 rounded-2xl hover:bg-slate-200 transition-all shadow-sm"
+                                    title="Pengaturan Iuran">
+                                    <Settings className="w-5 h-5" />
+                                  </Link>
+                                </>
+                              )}
                               {hasRole(['rt', 'wakil_rt', 'sekretaris']) && (
                                 <>
                                    <button 
